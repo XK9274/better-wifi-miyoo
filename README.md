@@ -20,6 +20,7 @@ Copy the BetterWifi folder to the App folder on your SDCARD (/App/BetterWifi/)
 - logo from https://icons8.com/icons/set/wifi
 
 ## Notes
+- wpa_supplicant.conf holds your networks and their keys, don't share this file with anyone nearby.
 - Not perfect, but feature rich enough for the time being. Can act as a repair tool for wifi, if you delete/corrupt your supplicant config you'll have issues with any sort of connection. In this case use option 12 to restore a backup or a default to restore enough functionality to get re-connected.
 
 ## Issues
