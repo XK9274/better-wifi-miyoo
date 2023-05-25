@@ -37,20 +37,20 @@ Not perfect, but feature rich enough for the time being. Can act as a repair too
 
 ## Menus
 
-1. Add new network and connect  						Adds a new network and immediatley attempts to connect - Will always be the next ID
-2. Connect stored network 						  		Allows hot-switching between networks (persistent over reboots) - Select based on ID
-3. Remove a network 						  			Removes a single stored entry - Removes an ID
-4. WPS connection (Wps button connection)  		 	    Attempts to connect with the WPS function
-5. Scan networks (Shows all networks nearby)  			Scans for nearby networks
-6. Store a network 							  			Stores a new network - Will store as the next available ID (Can later be connected to with option 2)
-7. Show stored networks	 								Shows currently stored networks
-8. Get status (Lists status of connected network)   	Gets status of current network
-9. Change hotspot password								Feature for upcoming release of Onion that contains a hotspot
-10. Restart Wifi										Bounces the wifi system, useful if you're having trouble.
-11.	Backup wpa_supplicant.conf							Backup your wifi details file
-12.	Restore wpa_supplicant.conf							Restore from a previous backup - If no backup exists can restore a default copy to repair wifi
-13. Reset wpa_supplicant.conf							Completely deletes all stored networks - Removes all ID's - This is destructive and you'll need to rebuild your wpa_supplicant.conf file. 
-14. Exit script											Quits
+1. Add new network and connect  						`- Adds a new network and immediatley attempts to connect - Will always be the next ID`
+2. Connect stored network 						  		`- Allows hot-switching between networks (persistent over reboots) - Select based on ID`
+3. Remove a network 						  		`- Removes a single stored entry - Removes an ID`
+4. WPS connection (Wps button connection)  		 	    `- Attempts to connect with the WPS function`
+5. Scan networks (Shows all networks nearby)  			-` Scans for nearby networks`
+6. Store a network 							  			`- Stores a new network - Will store as the next available ID (Can later be connected to with option 2)`
+7. Show stored networks	 								`- Shows currently stored networks`
+8. Get status (Lists status of connected network)   	`- Gets status of current network`
+9. Change hotspot password								`Feature for upcoming release of Onion that contains a hotspot`
+10. Restart Wifi										`Bounces the wifi system, useful if you're having trouble.`
+11.	Backup wpa_supplicant.conf							`Backup your wifi details file`
+12.	Restore wpa_supplicant.conf							`Restore from a previous backup - If no backup exists can restore a default copy to repair wifi`
+13. Reset wpa_supplicant.conf							`Completely deletes all stored networks - Removes all ID's - This is destructive and you'll need to rebuild your wpa_supplicant.conf file. `
+14. Exit script											`Quits`
 
 ## Screenshots
 
