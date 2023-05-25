@@ -57,3 +57,6 @@ Not perfect, but feature rich enough for the time being. Can act as a repair too
 ![script_002](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/2ea59737-872f-4816-bb9e-f828a0cbd404)
 ![script_001](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/c7ed33fb-5afa-4b17-a805-62e97b5aba20)
 ![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/b370c46b-98db-4587-9a48-ff6a3d05acda)
+![script_001](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/03e229c3-8621-47c1-a53b-faea564e4d74)
+![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/38af798b-8044-4311-8194-f09cf89c10fa)
+
