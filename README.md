@@ -11,15 +11,19 @@ Copy the BetterWifi folder to the App folder on your SDCARD (/App/BetterWifi/)
 ## Requirements
 - Onion OS (https://github.com/OnionUI/Onion) (Tested on Onion V4.2.0.2-beta and Onion V4.2.0.2-networking branch)
 - Latest firmware (Tested on 202305052130)
-- SimpleTerminal app (From OnionOS Package Manager) or eggs st with a new font from the RGD discord.
+- SimpleTerminal app (From OnionOS Package Manager) or eggs st with a new font from the RGD discord. (join us!)
 
 ## Bundled with
-- zsh https://github.com/zsh-users/zsh
+- zsh w/ regex https://github.com/zsh-users/zsh
 - dialog https://invisible-island.net/dialog/
 - logo from https://icons8.com/icons/set/wifi
 
 ## Notes
-Not perfect, but feature rich enough for the time being. Can act as a repair tool for wifi, if you delete/corrupt your supplicant config you'll have issues with any sort of connection. In this case use option 12 to restore a backup or a default to restore enough functionality to get re-connected.
+- Not perfect, but feature rich enough for the time being. Can act as a repair tool for wifi, if you delete/corrupt your supplicant config you'll have issues with any sort of connection. In this case use option 12 to restore a backup or a default to restore enough functionality to get re-connected.
+
+## Issues
+- When removing/adding/storing a network, it will add but option 7 won't auto update, it can take up to a reboot for this file to update.
+- Rare crash using option 10 (Restart wifi)
 
 ## How to use the keyboard
 - ARROWS: select key from keyboard
