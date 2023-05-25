@@ -1,8 +1,7 @@
 # better-wifi-miyoo
-A better (not prettier) toolkit for managing WiFi networks on the Miyoo Mini Plus - Rebuilt version with somewhat of a gui and improved/added features. Until these are included in Onion this *should* be a suitable stand-in
+A better (not prettier) toolkit for managing WiFi networks on the Miyoo Mini Plus - Rebuilt version of https://github.com/XK9274/wifi-tools-miyoo with somewhat of a gui and improved/added features. Until these are included in Onion this *should* be a suitable stand-in
 
 ![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/d04b9fa9-1814-4945-a4c8-1de04f9a8ccb)
-
 
 ## Usage
 Download the zip
@@ -27,7 +26,7 @@ Copy the BetterWifi folder to the App folder on your SDCARD (/App/BetterWifi/)
 - When removing/adding/storing a network, it will add but option 7 won't auto update, it can take up to a reboot for this file to update.
 - Rare crash using option 10 (Restart wifi)
 
-## How to use the keyboard
+## How to use the keyboard in ST
 - ARROWS: select key from keyboard
 - A: press key
 - B: toggle key (useful for shift/ctrl...)
