@@ -104,7 +104,7 @@ main() {
 }
 
 mainmenu() {
-TITLE="MMP+ Wifi Control"
+TITLE="MMP Wifi Control"
 MENU="Choose one of the following options:"
 
 OPTIONS=(1 "Add new network and connect"
