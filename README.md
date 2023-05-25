@@ -26,7 +26,7 @@ Copy the BetterWifi folder to the App folder on your SDCARD (/App/BetterWifi/)
 - When removing/adding/storing a network, it will add but option 7 won't auto update, it can take up to a reboot for this file to update.
 - Rare crash using option 10 (Restart wifi)
 
-## How to use the keyboard
+## How to use the keyboard in ST
 - ARROWS: select key from keyboard
 - A: press key
 - B: toggle key (useful for shift/ctrl...)
