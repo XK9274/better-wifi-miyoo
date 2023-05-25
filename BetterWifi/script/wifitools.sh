@@ -1,5 +1,3 @@
-#TODO Add connecting option from Scan menu??
-
 cd /mnt/SDCARD/App/BetterWifi/
 typeset -x sysdir=/mnt/SDCARD/.tmp_update
 typeset -x miyoodir=/mnt/SDCARD/miyoo
