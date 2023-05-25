@@ -1,8 +1,7 @@
 # better-wifi-miyoo
-A better (not prettier) toolkit for managing WiFi networks on the Miyoo Mini Plus - Rebuilt version with somewhat of a gui and improved/added features. Until these are included in Onion this *should* be a suitable stand-in
+A better (not prettier) toolkit for managing WiFi networks on the Miyoo Mini Plus - Rebuilt version of https://github.com/XK9274/wifi-tools-miyoo with somewhat of a gui and improved/added features. Until these are included in Onion this *should* be a suitable stand-in
 
 ![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/d04b9fa9-1814-4945-a4c8-1de04f9a8ccb)
-
 
 ## Usage
 Download the zip
