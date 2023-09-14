@@ -187,7 +187,7 @@ add_new() {
 	
     if [ -z "$SSID" ]; then
         longdialoginfo "Exit requested or SSID not set..."
-		sleep 2
+		sleep 1
         return 1
     fi	
 	
@@ -217,7 +217,7 @@ connect_stored() {
 
     if [ -z "$networks" ]; then
         longdialoginfo  "No stored networks found."
-        sleep 2
+        sleep 1
         return
     fi
 
@@ -231,7 +231,7 @@ connect_stored() {
 
     if [ -z "$selected_id" ]; then
         longdialoginfo "Exit requested or no network selected."
-        sleep 2
+        sleep 1
         return
     fi
 
@@ -261,7 +261,7 @@ enable_disable_stored() {
   
     if [ -z "$networks" ]; then
         longdialoginfo "No stored networks found."
-        sleep 2
+        sleep 1
         return
     fi
 
@@ -319,7 +319,7 @@ remove_stored() {
 
     if [ -z "$networks" ]; then
         longdialoginfo  "No stored networks found."
-        sleep 2
+        sleep 1
         return
     fi
 
@@ -333,7 +333,7 @@ remove_stored() {
 
     if [ -z "$selected_id" ]; then
         longdialoginfo "Exit requested or no network selected."
-        sleep 2
+        sleep 1
         return
     fi
 
@@ -391,7 +391,7 @@ wps_connection() {
         fi
     else
         longdialoginfo "Invalid choice. Exiting."
-		sleep 2
+		sleep 1
         return
     fi
 	
@@ -409,7 +409,7 @@ wps_connection() {
 
     if [ -z "$selected_ssid" ]; then
         longdialoginfo "No SSID selected. Exiting."
-		sleep 2
+		sleep 1
         return
     fi
 	
@@ -619,10 +619,10 @@ restart_wifi() {
 		
 		$WPACLI -i wlan0 reconnect >/dev/null 2>&1
         longdialoginfo "Wi-Fi has been fully reset."
-        sleep 2
+        sleep 1
     else
         longdialoginfo "Aborted. Wi-Fi reset was not performed."
-        sleep 2
+        sleep 1
 		return
     fi
     sleep 1
@@ -643,10 +643,10 @@ backup_wpa_supp() {
 
         if [ $? -eq 0 ]; then
             longdialoginfo "Backup created: $backup_file"
-            sleep 2
+            sleep 1
         else
             longdialoginfo "Failed to create backup."
-            sleep 2
+            sleep 1
         fi
     else
         longdialoginfo "wpa_supplicant.conf file not found."
@@ -667,11 +667,11 @@ restore_backup() {
 
         if [ $? -eq 0 ]; then
             longdialoginfo "Backup restored successfully."
-            sleep 2
+            sleep 1
 			restart_wifi
         else
             longdialoginfo "Failed to restore backup."
-            sleep 2
+            sleep 1
         fi
     else
         longdialoginfo "Backup file not found."
@@ -681,7 +681,7 @@ restore_backup() {
 		if [ $response -eq 0 ]; then
 			cp "$default_file" "$wpa_supplicant_conf" >/dev/null 2>&1 
 			longdialoginfo "Default file restored"
-					sleep 2
+			sleep 1
 			restart_wifi
 		else
 			return
@@ -708,7 +708,7 @@ reset_wpa_supplicant() {
         sleep 1
     else
         longdialoginfo "Aborted. Your WiFi networks were not deleted."
-        sleep 2
+        sleep 1
     fi
     sleep 1
 }
