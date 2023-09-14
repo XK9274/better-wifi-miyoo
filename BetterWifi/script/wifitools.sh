@@ -110,19 +110,19 @@ MENU="Choose one of the following options:"
 OPTIONS=(1 "Add new network and connect"
 		 2 "Connect to stored network"
          3 "Remove a network"
-         4 "WPS connection"
-         5 "Scan networks" 
-		 6 "Store a network manually (no connection)"
-         7 "Show stored networks"
-         8 "Get current status"
-		 9 "Change hotspot password (OnionOS)"
+         4 "Toggle a network (enabled/disabled)"
+         5 "WPS connection"
+         6 "Scan networks" 
+		 7 "Store a network manually (no connection)"
+         8 "Show stored networks"
+         9 "Get current status"
 		 10 "Restart WiFi"
          11 "Backup wpa_supplicant.conf"
 		 12 "Restore backup wpa_supplicant.conf"
 		 13 "Wipe wpa_supplicant.conf"
          14 "Exit")
 
-CHOICE=$($DIALOG --no-lines \
+CHOICE=$($DIALOG --colors --no-lines \
 				--clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
@@ -142,22 +142,22 @@ case $CHOICE in
             remove_stored
             ;;
         4)
-            wps_menu
+            enable_disable_stored
             ;;
         5)
-            scan_ssids
+            wps_menu
             ;;
         6)
-            store_new
+            scan_ssids
             ;;
         7)
-            show_networks
+            store_new
             ;;
         8)
-            show_info
+            show_networks
             ;;
 		9)
-            change_ap_pass
+            show_info
             ;;	
         10)
             restart_wifi
@@ -250,6 +250,47 @@ connect_stored() {
 	net_check $selected_ssid
 	show_info
 }
+
+enable_disable_stored() {
+    longdialoginfo "Getting available Wi-Fi networks..."
+    sleep 1
+    networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{$1=$1; $NF=$NF; print $1, substr($0, index($0,$2), length($0) - length($NF) - index($0,$2) + 1), $NF}')
+
+    if [ -z "$networks" ]; then
+        longdialoginfo "No stored networks found."
+        sleep 2
+        return
+    fi
+
+    local options=()
+    while read -r id ssid network_status; do
+        options+=("$id" "$ssid ($network_status)")
+    done <<< "$networks"
+
+    local cmd=($DIALOG --colors --no-lines --menu "Available networks:" 25 40 10)
+    selected_id=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+    if [ -z "$selected_id" ]; then
+        longdialoginfo "Exit requested or no network selected."
+        sleep 2
+        return
+    fi
+
+    selected_status=$(echo "$networks" | awk -v id="$selected_id" '$1 == id {print $NF}')
+    selected_status=$(echo "$selected_status" | tr -d '[]')
+
+    if [ "$selected_status" = "CURRENT" ] || [ "$selected_status" = "any" ] || [ -z "$selected_status" ]; then
+        $WPACLI -i wlan0 disable_network $selected_id > /dev/null 2>&1
+        longdialoginfo "Selected network: ID=$selected_id - DISABLED"
+    else
+        $WPACLI -i wlan0 enable_network $selected_id > /dev/null 2>&1
+        longdialoginfo "Selected network: ID=$selected_id - ENABLED"
+    fi
+    
+    $WPACLI -i wlan0 save_config > /dev/null 2>&1
+    $WPACLI -i wlan0 reconfigure > /dev/null 2>&1
+}
+
 
 remove_stored() {
     longdialoginfo "Getting available Wi-Fi networks..."
@@ -493,41 +534,41 @@ show_networks() {
     $DIALOG --no-lines --title "$title" --msgbox "$network_list" $MAXHEIGHT $MAXWIDTH
 }
 
-change_ap_pass() {
-    local new_pass=""
-    while true; do
-        new_pass=$($DIALOG --no-lines --inputbox "New AP password" 0 0 3>&1 1>&2 2>&3 3>&-)
+# change_ap_pass() {
+    # local new_pass=""
+    # while true; do
+        # new_pass=$($DIALOG --no-lines --inputbox "New AP password" 0 0 3>&1 1>&2 2>&3 3>&-)
         
-        if [ $? -eq 1 ]; then
-            longdialoginfo "Password change cancelled."
-			sleep 2
-            return
-        fi
+        # if [ $? -eq 1 ]; then
+            # longdialoginfo "Password change cancelled."
+			# sleep 2
+            # return
+        # fi
         
-        if [ -z "$new_pass" ]; then
-            longdialoginfo "Password cannot be empty. Please try again."
-			sleep 2
-            continue
-        fi
+        # if [ -z "$new_pass" ]; then
+            # longdialoginfo "Password cannot be empty. Please try again."
+			# sleep 2
+            # continue
+        # fi
 
-        if [ ${#new_pass} -lt 8 ]; then
-            longdialoginfo "Password should be at least 8 characters. Please try again."
-			sleep 2
-            continue
-        fi
+        # if [ ${#new_pass} -lt 8 ]; then
+            # longdialoginfo "Password should be at least 8 characters. Please try again."
+			# sleep 2
+            # continue
+        # fi
 
-        break
-    done
+        # break
+    # done
 
-    sed -i -r "s/(wpa_passphrase=).*/\1$new_pass/" /mnt/SDCARD/.tmp_update/config/hostapd.conf
-    if [ $? -eq 0 ]; then
-        longdialoginfo "Password updated successfully."
-		sleep 2
-    else
-        longdialoginfo "Failed to update the password."
-		sleep 2
-    fi
-}
+    # sed -i -r "s/(wpa_passphrase=).*/\1$new_pass/" /mnt/SDCARD/.tmp_update/config/hostapd.conf
+    # if [ $? -eq 0 ]; then
+        # longdialoginfo "Password updated successfully."
+		# sleep 2
+    # else
+        # longdialoginfo "Failed to update the password."
+		# sleep 2
+    # fi
+# }
 
 restart_wifi() {
     $DIALOG --no-lines --yesno "Warning: Do you want to restart WiFi?" 0 0
