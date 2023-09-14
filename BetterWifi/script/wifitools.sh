@@ -51,7 +51,7 @@ wpa_config() {
 }
 
 net_check() {
-    local selected_ssid=$1
+    local selected_ssid="$1"
 
     start_time=$(date +%s)
     timeout=30
@@ -69,12 +69,12 @@ net_check() {
             continue
         else
             longdialoginfo  "Connected to $selected_ssid"
-            sleep 1
+            sleep 0.5
             longdialoginfo  "Got IP: $IP"
-            sleep 1
+            sleep 0.5
             if ping -q -c 4 -W 1 8.8.8.8 >/dev/null 2>&1; then
                 longdialoginfo "Internet access is available."
-                sleep 1
+                sleep 0.5
                 break
             else
                 longdialoginfo "Internet access is not available yet."
@@ -110,7 +110,7 @@ MENU="Choose one of the following options:"
 OPTIONS=(1 "Add new network and connect"
 		 2 "Connect to stored network"
          3 "Remove a network"
-         4 "Toggle a network (enabled/disabled)"
+         4 "Toggle a network (enable/disable)"
          5 "WPS connection"
          6 "Scan networks" 
 		 7 "Store a network manually (no connection)"
@@ -206,14 +206,14 @@ add_new() {
     sleep 2
 	
 	conn_cleanup
-	net_check $SSID
+	net_check "$SSID"
 	show_info
 }
 
 connect_stored() {
     longdialoginfo "Getting available Wi-Fi networks..."
 	sleep 1
-    networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{print $1 " " $2}' | sed 's/\[.*\]//g')
+    local networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{$1=$1; $NF=$NF; print $1, substr($0, index($0,$2), length($0) - length($NF) - index($0,$2) + 1)}')
 
     if [ -z "$networks" ]; then
         longdialoginfo  "No stored networks found."
@@ -227,7 +227,7 @@ connect_stored() {
     done <<< "$networks"
 
     local cmd=($DIALOG --no-lines --menu "Available networks:" 25 40 10)
-    selected_id=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+    local selected_id=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
     if [ -z "$selected_id" ]; then
         longdialoginfo "Exit requested or no network selected."
@@ -235,27 +235,30 @@ connect_stored() {
         return
     fi
 
-    selected_ssid=$(echo "$networks" | awk -v id="$selected_id" '$1 == id {print $2}')
+    selected_ssid=$(echo "$networks" | awk -v id="$selected_id" '$1 == id {for(i=2;i<=NF;i++) {if ($i == "any") break; printf("%s", $i); if (i < NF) printf(" ");} printf("\n");}')
 
     longdialoginfo "Selected network: ID=$selected_id SSID=$selected_ssid"
 	sleep 1
 
     longdialoginfo "Connecting to $selected_ssid..."
-    $WPACLI -i wlan0 disable_network all > /dev/null 2>&1
     $WPACLI -i wlan0 select_network $selected_id > /dev/null 2>&1
     $WPACLI -i wlan0 enable_network $selected_id > /dev/null 2>&1
     $WPACLI -i wlan0 save_config > /dev/null 2>&1
+    # $WPACLI -i wlan0 reassociate > /dev/null 2>&1
 	
 	conn_cleanup
-	net_check $selected_ssid
+	net_check "$selected_ssid"
+    unset selected_ssid
+    unset selected_status
+    unset networks
 	show_info
 }
 
 enable_disable_stored() {
     longdialoginfo "Getting available Wi-Fi networks..."
     sleep 1
-    networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{$1=$1; $NF=$NF; print $1, substr($0, index($0,$2), length($0) - length($NF) - index($0,$2) + 1), $NF}')
-
+    local networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{$1=$1; $NF=$NF; print $1, substr($0, index($0,$2), length($0) - length($NF) - index($0,$2) + 1), $NF}')
+  
     if [ -z "$networks" ]; then
         longdialoginfo "No stored networks found."
         sleep 2
@@ -275,20 +278,37 @@ enable_disable_stored() {
         sleep 2
         return
     fi
-
+    
+    selected_ssid=$(echo "$networks" | awk -v id="$selected_id" '$1 == id {for(i=2;i<=NF;i++) {if ($i == "any") break; printf("%s", $i); if (i < NF) printf(" ");} printf("\n");}')
     selected_status=$(echo "$networks" | awk -v id="$selected_id" '$1 == id {print $NF}')
     selected_status=$(echo "$selected_status" | tr -d '[]')
 
     if [ "$selected_status" = "CURRENT" ] || [ "$selected_status" = "any" ] || [ -z "$selected_status" ]; then
         $WPACLI -i wlan0 disable_network $selected_id > /dev/null 2>&1
-        longdialoginfo "Selected network: ID=$selected_id - DISABLED"
+        longdialoginfo "SSID=$selected_ssid, ID=$selected_id -> DISABLED"
+        sleep 2
     else
         $WPACLI -i wlan0 enable_network $selected_id > /dev/null 2>&1
-        longdialoginfo "Selected network: ID=$selected_id - ENABLED"
+        longdialoginfo "SSID=$selected_ssid, ID=$selected_id -> ENABLED"
+        attempt_connect=1
+        sleep 2
     fi
     
     $WPACLI -i wlan0 save_config > /dev/null 2>&1
-    $WPACLI -i wlan0 reconfigure > /dev/null 2>&1
+    
+    if [ "$attempt_connect" -eq 1 ]; then
+        $DIALOG --no-lines --yesno "Try and connect to this network now?" 0 0
+        if [ $? -eq 0 ]; then
+            $WPACLI -i wlan0 reconfigure > /dev/null 2>&1
+            conn_cleanup
+            net_check "$selected_ssid"
+            show_info
+            attempt_connect=0
+        fi
+    fi
+    unset selected_ssid
+    unset selected_status
+    unset networks
 }
 
 
@@ -407,7 +427,7 @@ wps_connection() {
 	sleep 2
 
     conn_cleanup
-	net_check $selected_ssid
+	net_check "$selected_ssid"
 	show_info
 }
 
