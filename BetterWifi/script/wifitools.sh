@@ -257,6 +257,7 @@ connect_stored() {
 enable_disable_stored() {
     longdialoginfo "Getting available Wi-Fi networks..."
     sleep 1
+    attempt_connect=0
     local networks=$($WPACLI -i wlan0 list_networks | tail -n+2 | awk '{$1=$1; $NF=$NF; print $1, substr($0, index($0,$2), length($0) - length($NF) - index($0,$2) + 1), $NF}')
   
     if [ -z "$networks" ]; then
@@ -303,9 +304,10 @@ enable_disable_stored() {
             conn_cleanup
             net_check "$selected_ssid"
             show_info
-            attempt_connect=0
         fi
     fi
+    
+    attempt_connect=0
     unset selected_ssid
     unset selected_status
     unset networks
@@ -541,6 +543,7 @@ store_new() {
 
 show_networks() {
 	sync
+    $WPACLI -i wlan0 reconfigure > /dev/null 2>&1
     local wpa_supplicant_conf=/appconfigs/wpa_supplicant.conf
     local title="Wi-Fi Network List (Scrollable)"
 
