@@ -1,7 +1,7 @@
 # better-wifi-miyoo
 A better (not prettier) toolkit for managing WiFi networks on the Miyoo Mini Plus - Rebuilt version of https://github.com/XK9274/wifi-tools-miyoo with somewhat of a gui and improved/added features. Until these are included in Onion this *should* be a suitable stand-in
 
-![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/d04b9fa9-1814-4945-a4c8-1de04f9a8ccb)
+![script_001](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/78de2a92-c2d6-405f-8fe3-906b11ad2c16)
 
 ## Usage
 Download the zip
@@ -42,25 +42,37 @@ Copy the BetterWifi folder to the App folder on your SDCARD (/App/BetterWifi/)
 
 ## Menus
 
-1. Add new network and connect  						`- Adds a new network and immediatley attempts to connect - Will always be the next ID`
-2. Connect stored network 						  		`- Allows hot-switching between networks (persistent over reboots) - Select based on ID`
-3. Remove a network 						  		`- Removes a single stored entry - Removes an ID`
-4. WPS connection (Wps button connection)  		 	    `- Attempts to connect with the WPS function`
-5. Scan networks (Shows all networks nearby)  			-` Scans for nearby networks`
-6. Store a network 							  			`- Stores a new network - Will store as the next available ID (Can later be connected to with option 2)`
-7. Show stored networks	 								`- Shows currently stored networks`
-8. Get status (Lists status of connected network)   	`- Gets status of current network`
-9. Change hotspot password								`Feature for upcoming release of Onion that contains a hotspot`
-10. Restart Wifi										`Bounces the wifi system, useful if you're having trouble.`
-11.	Backup wpa_supplicant.conf							`Backup your wifi details file`
-12.	Restore wpa_supplicant.conf							`Restore from a previous backup - If no backup exists can restore a default copy to repair wifi`
-13. Reset wpa_supplicant.conf							`Completely deletes all stored networks - Removes all ID's - This is destructive and you'll need to rebuild your wpa_supplicant.conf file. `
-14. Exit script											`Quits`
+1 "Add new network and connect" `- Adds a new network and immediatley attempts to connect - Will always be the next ID`
+
+2 "Connect to stored network" `- Allows hot-switching between networks (persistent over reboots) - Select based on ID`
+
+3 "Remove a network" `- Removes a single stored entry - Removes an ID`
+
+4 "Toggle a network (enable/disable)" `- Allows network roaming by selective enabling/disabling of networks`
+
+5 "WPS connection" `- Attempts to connect with the WPS function`
+
+6 "Scan networks" `- Scans for nearby networks`
+
+7 "Store a network manually (no connection)" `- Stores a new network - Will store as the next available ID (Can later be connected to with option 2)`
+
+8 "Show stored networks" `- Shows currently stored networks`
+
+9 "Get current status" `- Gets status of current network`
+
+10 "Restart WiFi" `- Bounces the wifi system, useful if you're having trouble.`
+
+11 "Backup wpa_supplicant.conf"  `- Backup your wifi details file`
+
+12 "Restore backup wpa_supplicant.conf" `- Restore from a previous backup - If no backup exists can restore a default copy to repair wifi`
+
+13 "Wipe wpa_supplicant.conf" `- Completely deletes all stored networks - Removes all ID's - This is destructive and you'll need to rebuild your wpa_supplicant.conf file. `
+
+14 "Exit" `- Quits`
 
 ## Screenshots
 ![script_001](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/f0a9125f-2fc0-4df3-b381-e103c105a4fe)
 ![script_002](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/64a9ba9d-8cbd-45b2-b99b-473e68ea31bc)
 ![script_001](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/214f80c3-6240-4c0c-a143-b0cd3dd93947)
-![script_000](https://github.com/XK9274/better-wifi-miyoo/assets/47260768/e6914a13-12fc-4cf5-9758-0173881b907d)
 
 
