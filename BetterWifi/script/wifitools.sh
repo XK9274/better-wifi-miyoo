@@ -700,7 +700,7 @@ reset_wpa_supplicant() {
         $WPACLI -i wlan0 remove_network all >/dev/null 2>&1
         $WPACLI -i wlan0 save_config >/dev/null 2>&1
         rm -f /appconfigs/wpa_supplicant.conf >/dev/null 2>&1
-        cat <<-EOF > /path/to/file/appconfigs/wpa_supplicant.conf
+        cat <<-EOF > /appconfigs/wpa_supplicant.conf
 		ctrl_interface=/var/run/wpa_supplicant
 		update_config=1
 		EOF
